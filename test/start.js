@@ -3,24 +3,23 @@ const MAPJS = require('../src/npm-main'),
 	jQuery = require('jquery'),
 	themeProvider = require('./theme'),
 	ThemeProcessor = require('mindmup-mapjs-layout').ThemeProcessor,
-	testMap = require('./example-map'),
+	testMap = {},
 	content = require('mindmup-mapjs-model').content,
 	init = function () {
 		'use strict';
 		const container = jQuery('#container'),
 			idea = content(testMap),
-			imageInsertController = new MAPJS.ImageInsertController('http://localhost:4999?u='),
+			imageInsertController = new MAPJS.ImageInsertController('http://localhost'),
 			mapModel = new MAPJS.MapModel(MAPJS.DOMRender.layoutCalculator, []);
-
 		jQuery.fn.attachmentEditorWidget = function (mapModel) {
 			return this.each(function () {
 				mapModel.addEventListener('attachmentOpened', function (nodeId, attachment) {
 					mapModel.setAttachment(
-							'attachmentEditorWidget',
-							nodeId, {
-								contentType: 'text/html',
-								content: window.prompt('attachment', attachment && attachment.content)
-							});
+						'attachmentEditorWidget',
+						nodeId, {
+						contentType: 'text/html',
+						content: window.prompt('attachment', attachment && attachment.content)
+					});
 				});
 			});
 		};
